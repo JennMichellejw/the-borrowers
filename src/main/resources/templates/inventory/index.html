@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<form th:action="@{/inventory/searchResults}" method = "post">
+    <div class="form-group">
+        <label>Search:
+            <input name = searchTerm class="form-control">
+        </label>
+        <!--      TODO error for search term      <span th:errors="${item.name}" class="error"></span>-->
+        <input type="button"  value="Submit" >
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Inventory</th>
+    </tr>
+    </thead>
+    <tr th:each="item : ${inventory}">
+        <td><a th:href="'/inventory/detail?itemId=' + ${item.id}" th:text="${item.name}"></a></td>
+    </tr>
+</table>
+
+</body>

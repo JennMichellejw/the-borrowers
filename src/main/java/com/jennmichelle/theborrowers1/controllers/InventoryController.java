@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("inventory")
@@ -33,10 +34,10 @@ public class InventoryController {
     @GetMapping
     public String displayAllInventory(HttpSession session, Model model){
 
-        User user = authenticationController.getUserFromSession(session);
+        int user = authenticationController.getUserFromSession(session).getId();
 
         model.addAttribute("title", "Inventory");
-        model.addAttribute("inventory", user.getUserInventoryList());
+        model.addAttribute("inventory", userRepository.findById(user).get().getUserInventoryList());
 
         return "inventory/index";
     }
@@ -54,7 +55,7 @@ public class InventoryController {
     public String processCreateInventoryForm(HttpSession session, @ModelAttribute @Valid InventoryItem item,
                                              Errors errors, Model model) {
 
-        User user = authenticationController.getUserFromSession(session);
+        int user = authenticationController.getUserFromSession(session).getId();
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Add Inventory");
@@ -63,10 +64,27 @@ public class InventoryController {
             return "inventory/add";
         }
 
-        item.setUser(user);
-        user.addItemToUserInventory(item);
+        item.setUser(userRepository.findById(user).get());
+        userRepository.findById(user).get().addItemToUserInventory(item);
         inventoryRepository.save(item);
 
         return "redirect:";
     }
+
+    @GetMapping("detail")
+    public String displayItemDetails(@RequestParam Integer itemId, Model model) {
+
+        Optional<InventoryItem> result = inventoryRepository.findById(itemId);
+
+        if (result.isEmpty()) {
+            model.addAttribute("title", "Invalid Item ID: " + itemId);
+        } else {
+            InventoryItem item = result.get();
+            model.addAttribute("title", item.getName() + " Details");
+            model.addAttribute("item", item);
+        }
+
+        return "inventory/itemDetail";
+    }
+
 }

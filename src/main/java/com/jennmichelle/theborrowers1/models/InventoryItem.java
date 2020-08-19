@@ -23,8 +23,8 @@ public class InventoryItem extends AbstractEntity{
 
     public InventoryItem(){}
 
-    public String getUser() {
-        return user.getUsername();
+    public int getUser() {
+        return user.getId();
     }
 
 

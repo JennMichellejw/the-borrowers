@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<table class="table table-striped">
+    <tr>
+        <th>Name</th>
+        <td th:text= "${borrower.firstName} + ' ' + ${borrower.lastName}"></td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td th:text="${borrower.email}"></td>
+    </tr>
+    <tr>
+        <th>Phone Number</th>
+        <td th:text="${borrower.phoneNumber}"></td>
+    </tr>
+
+</table>

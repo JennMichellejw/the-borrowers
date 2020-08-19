@@ -23,7 +23,7 @@
     </tr>
     </thead>
     <tr th:each="item : ${inventory}">
-        <td><a th:text="${item.name}"></a></td>
+        <td><a th:href="'/inventory/detail?itemId=' + ${item.id}" th:text="${item.name}"></a></td>
     </tr>
 </table>
 

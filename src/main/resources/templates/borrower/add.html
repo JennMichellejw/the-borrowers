@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+<form method="post">
+    <div class="form-group">
+        <label>First Name
+            <input th:field="${borrower.firstName}" class="form-control">
+        </label>
+        <span th:errors="${borrower.firstName}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label>Last Name
+            <input th:field="${borrower.lastName}" class="form-control">
+        </label>
+        <span th:errors="${borrower.lastName}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label>Email address
+            <input  th:field="${borrower.email}">
+        </label>
+        <span th:errors="${borrower.email}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label>Phone Number
+            <input type = "tel" th:field="${borrower.phoneNumber}">
+        </label>
+        <span th:errors="${borrower.phoneNumber}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary">
+</form>
+
+</body>
+</html>

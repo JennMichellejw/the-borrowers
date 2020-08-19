@@ -5,7 +5,6 @@ import com.sun.istack.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +20,9 @@ public class User extends AbstractEntity {
 
     @OneToMany(mappedBy = "user")
     private List<InventoryItem> userInventoryList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Borrower> userBorrowerList = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -50,6 +52,14 @@ public class User extends AbstractEntity {
 
     public void addItemToUserInventory(InventoryItem item){
         userInventoryList.add(item);
+    }
+
+    public List<Borrower> getUserBorrowerList() {
+        return userBorrowerList;
+    }
+
+    public void addBorrowerToUserBorrowerList(Borrower borrower) {
+        userBorrowerList.add(borrower);
     }
 }
 

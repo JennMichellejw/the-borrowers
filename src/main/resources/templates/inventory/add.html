@@ -1,0 +1,44 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+<form method="post">
+    <div class="form-group">
+        <label>Inventory Item
+            <input th:field="${item.name}" class="form-control">
+        </label>
+        <span th:errors="${item.name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label>Type
+            <select th:field="${item.type}">
+                <option th:each="type : ${types}"
+                        th:value="${type.displayName}"
+                        th:text="${type.displayName}"
+                ></option>
+            </select>
+        </label>
+    </div>
+        <div class="form-group">
+            <label>Condition
+                <select th:field="${item.itemCondition}">
+                    <option th:each="condition : ${conditions}"
+                            th:value="${condition.displayName}"
+                            th:text="${condition.displayName}"
+                    ></option>
+                </select>
+            </label>
+        </div>
+    <div class="form-group">
+        <label>Item Description
+            <span>(include details of any flaws, identifying features ect.)</span>
+            <input th:field="${item.description}" class="form-control">
+        </label>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary">
+</form>
+
+</body>
+</html>

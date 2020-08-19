@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-public class inventoryItem extends AbstractEntity{
+public class InventoryItem extends AbstractEntity{
 
     @NotBlank(message = "item name required")
     @Size(min = 3, max = 255)
@@ -21,15 +21,12 @@ public class inventoryItem extends AbstractEntity{
     @ManyToOne
     private User user;
 
-    public inventoryItem(){}
+    public InventoryItem(){}
 
-    public User getUser() {
-        return user;
+    public String getUser() {
+        return user.getUsername();
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public String getType() {
         return type;
@@ -61,5 +58,9 @@ public class inventoryItem extends AbstractEntity{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

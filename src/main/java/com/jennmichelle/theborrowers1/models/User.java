@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -20,13 +19,13 @@ public class User extends AbstractEntity {
     @NotNull
     private String pwHash;
 
-    @OneToMany
-    @JoinColumn
-    private final List<inventoryItem> userInventoryList = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<InventoryItem> userInventoryList = new ArrayList<>();
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
+
 
     public User(String username, String password) {
         this.username = username;
@@ -41,9 +40,16 @@ public class User extends AbstractEntity {
         return username;
     }
 
-    public List<inventoryItem> getUserInventoryList() {
+    public void setUserInventoryList(List<InventoryItem> userInventoryList) {
+        this.userInventoryList = userInventoryList;
+    }
+
+    public List<InventoryItem> getUserInventoryList() {
         return userInventoryList;
     }
 
+    public void addItemToUserInventory(InventoryItem item){
+        userInventoryList.add(item);
+    }
 }
 

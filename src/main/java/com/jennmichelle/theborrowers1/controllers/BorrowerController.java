@@ -4,6 +4,7 @@ import com.jennmichelle.theborrowers1.ItemCondition;
 import com.jennmichelle.theborrowers1.ItemType;
 import com.jennmichelle.theborrowers1.data.BorrowerRepository;
 import com.jennmichelle.theborrowers1.data.UserRepository;
+import com.jennmichelle.theborrowers1.dto.UserItemDTO;
 import com.jennmichelle.theborrowers1.models.Borrower;
 import com.jennmichelle.theborrowers1.models.InventoryItem;
 import com.jennmichelle.theborrowers1.models.User;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
+import com.jennmichelle.theborrowers1.services.userToItemService;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -30,14 +31,16 @@ public class BorrowerController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    userToItemService userToItemServices;
+
     @GetMapping
     public String displayAllBorrowers(HttpSession session, Model model){
 
-
-        int user = authenticationController.getUserFromSession(session).getId();
+        User user = authenticationController.getUserFromSession(session);
 
         model.addAttribute("title", "Borrowers");
-        model.addAttribute("borrowers" , userRepository.findById(user).get().getUserBorrowerList());
+        model.addAttribute("borrowers" , user.getUserBorrowerList());
 
         return "borrower/index";
     }
@@ -53,15 +56,15 @@ public class BorrowerController {
     public String processCreateBorrowerForm(HttpSession session, @ModelAttribute @Valid Borrower borrower,
                                              Errors errors, Model model) {
 
-        int user = authenticationController.getUserFromSession(session).getId();
+        User user = authenticationController.getUserFromSession(session);
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Add Borrower");
             return "borrower/add";
         }
 
-        borrower.setUser(userRepository.findById(user).get());
-        userRepository.findById(user).get().addBorrowerToUserBorrowerList(borrower);
+        borrower.setUser(user);
+        user.addBorrowerToUserBorrowerList(borrower);
         borrowerRepository.save(borrower);
 
         return "redirect:";

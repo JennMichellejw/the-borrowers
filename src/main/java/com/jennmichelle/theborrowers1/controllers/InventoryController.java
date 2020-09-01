@@ -4,6 +4,7 @@ import com.jennmichelle.theborrowers1.ItemCondition;
 import com.jennmichelle.theborrowers1.ItemType;
 import com.jennmichelle.theborrowers1.data.InventoryRepository;
 import com.jennmichelle.theborrowers1.data.UserRepository;
+import com.jennmichelle.theborrowers1.dto.UserItemDTO;
 import com.jennmichelle.theborrowers1.models.InventoryItem;
 import com.jennmichelle.theborrowers1.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,33 +12,38 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import com.jennmichelle.theborrowers1.services.userToItemService;
+import com.jennmichelle.theborrowers1.services.userToItemService;
 
 @Controller
 @RequestMapping("inventory")
-public class InventoryController {
+public class InventoryController extends HandlerInterceptorAdapter {
 
     @Autowired
     InventoryRepository inventoryRepository;
 
     @Autowired
-    UserRepository userRepository;
+    userToItemService userToItemService;
 
-    @Autowired
-    AuthenticationController authenticationController;
+
 
     @GetMapping
     public String displayAllInventory(HttpSession session, Model model){
 
-        int user = authenticationController.getUserFromSession(session).getId();
+
+        UserItemDTO user = userToItemService.userToDto(session);
 
         model.addAttribute("title", "Inventory");
-        model.addAttribute("inventory", userRepository.findById(user).get().getUserInventoryList());
+        model.addAttribute("inventory", user.getInventoryItemList());
 
         return "inventory/index";
     }
@@ -55,7 +61,7 @@ public class InventoryController {
     public String processCreateInventoryForm(HttpSession session, @ModelAttribute @Valid InventoryItem item,
                                              Errors errors, Model model) {
 
-        int user = authenticationController.getUserFromSession(session).getId();
+        UserItemDTO user = userToItemService.userToDto(session);
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Add Inventory");
@@ -64,8 +70,8 @@ public class InventoryController {
             return "inventory/add";
         }
 
-        item.setUser(userRepository.findById(user).get());
-        userRepository.findById(user).get().addItemToUserInventory(item);
+        item.setUser(userToItemService.getUser(user));
+        userToItemService.addItemToUserInventory(item, user);
         inventoryRepository.save(item);
 
         return "redirect:";

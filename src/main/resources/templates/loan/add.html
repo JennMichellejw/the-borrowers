@@ -1,0 +1,42 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+<form method="post">
+    <div class="form-group">
+        <label>Which item are you loaning out?
+            <select th:field="${loan.item}">
+                <option th:each="item : ${items}"
+                        th:value="${item.name}"
+                        th:text="${item.name}"
+                ></option>
+            </select>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Who is borrowing this item?
+            <select th:field="${loan.borrower}">
+                <option th:each="borrower : ${borrowers}"
+                        th:value="${borrower.firstName} + '' + ${borrower.lastName}"
+                        th:text="${borrower.firstName} + '' + ${borrower.lastName}"
+                ></option>
+            </select>
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Due Date
+            <input th:feild = "${loan.dueDate}" type = "date" class = "form-control">
+        </label>
+    </div>
+    <div class="form-group">
+        <label>Cost of unreturned loan
+            <input th:field="${loan.costForUnreturnedItem}" class="form-control">
+        </label>
+    </div>
+
+    <input type="submit" value="Create" class="btn btn-primary">
+</form>
+
+</body>
+</html>

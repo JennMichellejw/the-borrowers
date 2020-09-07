@@ -24,6 +24,9 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "user")
     private List<Borrower> userBorrowerList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Loan> userLoanList = new ArrayList<>();
+
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public User() {}
@@ -56,6 +59,18 @@ public class User extends AbstractEntity {
 
     public List<Borrower> getUserBorrowerList() {
         return userBorrowerList;
+    }
+
+    public List<Loan> getUserLoanList() {
+        return userLoanList;
+    }
+
+    public void addLoantoLoanList(Loan loan){
+        userLoanList.add(loan);
+    }
+
+    public void setUserLoanList(List<Loan> userLoanList) {
+        this.userLoanList = userLoanList;
     }
 
     public void addBorrowerToUserBorrowerList(Borrower borrower) {

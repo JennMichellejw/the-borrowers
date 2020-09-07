@@ -1,6 +1,8 @@
 package com.jennmichelle.theborrowers1.services;
 
 import com.jennmichelle.theborrowers1.controllers.AuthenticationController;
+import com.jennmichelle.theborrowers1.data.BorrowerRepository;
+import com.jennmichelle.theborrowers1.dto.BorrowerDTO;
 import com.jennmichelle.theborrowers1.dto.UserItemDTO;
 import com.jennmichelle.theborrowers1.models.Borrower;
 import com.jennmichelle.theborrowers1.models.InventoryItem;
@@ -11,35 +13,36 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpSession;
 
 @Component
-public class userToItemService {
+public class BorrowerService {
 
+    @Autowired
+    BorrowerRepository borrowerRepository;
 
     @Autowired
     AuthenticationController authenticationController;
 
-
-    // send user and item data to DTO
-    public UserItemDTO userToDto(HttpSession session){
+    //send borrower/userinfo to DTO
+    public BorrowerDTO borrowerToDTO(HttpSession session){
 
         User user = authenticationController.getUserFromSession(session);
-        UserItemDTO dto = new UserItemDTO();
+        BorrowerDTO dto = new BorrowerDTO();
         dto.setUser(user);
-        dto.setInventoryItemList(user.getUserInventoryList());
+        dto.setUserBorrowerList(user.getUserBorrowerList());
 
         return dto;
     }
 
+    public void addBorrowerToBorrowerList(Borrower borrower, BorrowerDTO user){
+        User aUser = user.getUser();
+        aUser.addBorrowerToUserBorrowerList(borrower);
+    }
 
     public User getUser(UserItemDTO dto){
         return dto.getUser();
-    }
-
-    public void addItemToUserInventory(InventoryItem item, UserItemDTO user){
-        User aUser = user.getUser();
-        aUser.addItemToUserInventory(item);
     }
 
 
 
 
 }
+

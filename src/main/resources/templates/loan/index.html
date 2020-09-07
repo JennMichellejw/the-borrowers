@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<header th:replace="fragments :: header"></header>
+
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="/inventory/add">Add Inventory</a></li>
+    <li class="nav-item"><a class="nav-link" href="/borrower">Borrowers</a></li>
+</ul>
+
+<!--<form th:action="@{/inventory/searchResults}" method = "post">-->
+<!--    <div class="form-group">-->
+<!--        <label>Search:-->
+<!--            <input name = searchTerm class="form-control">-->
+<!--        </label>-->
+<!--        &lt;!&ndash;      TODO error for search term      <span th:errors="${item.name}" class="error"></span>&ndash;&gt;-->
+<!--        <input type="button"  value="Submit" >-->
+<!--    </div>-->
+<!--</form>-->
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Loan</th>
+    </tr>
+    </thead>
+    <tr th:each="loan : ${loans}">
+        <td><a th:href="'/loan/detail?loanId=' + ${loan.id}" th:text="${loan.item}"></a></td>
+    </tr>
+</table>
+
+</body>

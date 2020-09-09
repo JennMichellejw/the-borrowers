@@ -9,6 +9,7 @@ import com.jennmichelle.theborrowers1.dto.LoanDTO;
 import com.jennmichelle.theborrowers1.dto.UserItemDTO;
 import com.jennmichelle.theborrowers1.models.InventoryItem;
 import com.jennmichelle.theborrowers1.models.Loan;
+import com.jennmichelle.theborrowers1.models.User;
 import com.jennmichelle.theborrowers1.services.LoanServices;
 import com.jennmichelle.theborrowers1.services.userToItemService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,17 @@ public class LoanController{
     @Autowired
     LoanServices loanServices;
 
+    @Autowired
+    AuthenticationController authenticationController;
 
     @GetMapping
     public String displayAllLoans(HttpSession session, Model model){
 
         LoanDTO user = loanServices.loanToDTO(session);
+        User aUser = authenticationController.getUserFromSession(session);
 
         model.addAttribute("title", "Loans");
-        model.addAttribute("loans" , user.getUserLoanList());
+        model.addAttribute("loans" , aUser.getUserLoanList());
 
         return "loan/index";
     }

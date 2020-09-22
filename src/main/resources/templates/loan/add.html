@@ -18,8 +18,8 @@
         <label>Who is borrowing this item?
             <select th:field="${loan.borrower}">
                 <option th:each="borrower : ${borrowers}"
-                        th:value="${borrower.firstName} + '' + ${borrower.lastName}"
-                        th:text="${borrower.firstName} + '' + ${borrower.lastName}"
+                        th:value="${borrower.firstName} + ' ' + ${borrower.lastName}"
+                        th:text="${borrower.firstName} + ' ' + ${borrower.lastName}"
                 ></option>
             </select>
         </label>

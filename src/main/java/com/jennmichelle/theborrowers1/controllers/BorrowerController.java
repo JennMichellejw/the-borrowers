@@ -1,15 +1,16 @@
 package com.jennmichelle.theborrowers1.controllers;
 
 import com.jennmichelle.theborrowers1.data.BorrowerRepository;
-import com.jennmichelle.theborrowers1.data.UserRepository;
-import com.jennmichelle.theborrowers1.dto.BorrowerDTO;
+import com.jennmichelle.theborrowers1.dto.UserDTO;
 import com.jennmichelle.theborrowers1.models.Borrower;
 import com.jennmichelle.theborrowers1.services.BorrowerService;
+import com.jennmichelle.theborrowers1.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,11 +26,15 @@ public class BorrowerController {
     @Autowired
     BorrowerService borrowerService;
 
+    @Autowired
+    UserServices userServices;
+
+
 
     @GetMapping
     public String displayAllBorrowers(HttpSession session, Model model){
 
-        BorrowerDTO user = borrowerService.borrowerToDTO(session);
+        UserDTO user = userServices.userToDto(session);
 
         model.addAttribute("title", "Borrowers");
         model.addAttribute("borrowers" , user.getUserBorrowerList());
@@ -48,7 +53,7 @@ public class BorrowerController {
     public String processCreateBorrowerForm(HttpSession session, @ModelAttribute @Valid Borrower borrower,
                                              Errors errors, Model model) {
 
-        BorrowerDTO  user = borrowerService.borrowerToDTO(session);
+        UserDTO  user = userServices.userToDto(session);
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Add Borrower");
@@ -56,7 +61,7 @@ public class BorrowerController {
         }
 
         borrower.setUser(user.getUser());
-        borrowerService.addBorrowerToBorrowerList(borrower, user);
+        userServices.addBorrowerToBorrowerList(borrower, user);
         borrowerRepository.save(borrower);
 
         return "redirect:";

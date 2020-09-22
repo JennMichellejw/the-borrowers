@@ -4,23 +4,29 @@ import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Loan extends AbstractEntity{
 
-    @OneToOne
+    @ManyToOne
     private Borrower borrower;
-    @OneToOne
+
+    @ManyToOne
     private InventoryItem item;
+
     @ManyToOne
     private User user;
-    private long dueDate;
-    private long returnDate;
+
+    private int dueDate;
+    private int returnDate;
     private String costForUnreturnedItem;
     private String returnCondition;
     private Boolean isActive = true;
 
+    public Loan() {
+    }
 
 
     public Boolean getActive() {
@@ -47,19 +53,19 @@ public class Loan extends AbstractEntity{
         this.costForUnreturnedItem = costForUnreturnedItem;
     }
 
-    public long getReturnDate() {
+    public int getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(long returnDate) {
+    public void setReturnDate(int returnDate) {
         this.returnDate = returnDate;
     }
 
-    public long getDueDate() {
+    public int getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(long dueDate) {
+    public void setDueDate(int dueDate) {
         this.dueDate = dueDate;
     }
 

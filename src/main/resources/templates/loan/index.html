@@ -28,7 +28,7 @@
     </tr>
     </thead>
     <tr th:each="loan : ${loans}">
-        <td><a th:href="'/loan/detail?loanId=' + ${loan.id}" th:text="${loan.item}"></a></td>
+        <td><a th:href="'/loan/detail?loanId=' + ${loan.id}" th:text="${loan.dueDate}"></a></td>
     </tr>
 </table>
 

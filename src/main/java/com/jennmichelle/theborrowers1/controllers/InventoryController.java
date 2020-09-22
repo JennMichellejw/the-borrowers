@@ -3,10 +3,10 @@ package com.jennmichelle.theborrowers1.controllers;
 import com.jennmichelle.theborrowers1.ItemCondition;
 import com.jennmichelle.theborrowers1.ItemType;
 import com.jennmichelle.theborrowers1.data.InventoryRepository;
-import com.jennmichelle.theborrowers1.data.UserRepository;
-import com.jennmichelle.theborrowers1.dto.UserItemDTO;
+import com.jennmichelle.theborrowers1.dto.UserDTO;
 import com.jennmichelle.theborrowers1.models.InventoryItem;
 import com.jennmichelle.theborrowers1.models.User;
+import com.jennmichelle.theborrowers1.services.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +14,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
-import com.jennmichelle.theborrowers1.services.userToItemService;
-import com.jennmichelle.theborrowers1.services.userToItemService;
 
 @Controller
 @RequestMapping("inventory")
@@ -31,19 +25,22 @@ public class InventoryController extends HandlerInterceptorAdapter {
     @Autowired
     InventoryRepository inventoryRepository;
 
-    @Autowired
-    userToItemService userToItemService;
 
+    @Autowired
+    UserServices userServices;
+
+    @Autowired
+    AuthenticationController authenticationController;
 
 
     @GetMapping
     public String displayAllInventory(HttpSession session, Model model){
 
 
-        UserItemDTO user = userToItemService.userToDto(session);
+        UserDTO user = userServices.userToDto(session);
 
         model.addAttribute("title", "Inventory");
-        model.addAttribute("inventory", user.getInventoryItemList());
+        model.addAttribute("inventory", user.getUserInventoryList());
 
         return "inventory/index";
     }
@@ -61,7 +58,7 @@ public class InventoryController extends HandlerInterceptorAdapter {
     public String processCreateInventoryForm(HttpSession session, @ModelAttribute @Valid InventoryItem item,
                                              Errors errors, Model model) {
 
-        UserItemDTO user = userToItemService.userToDto(session);
+        UserDTO user = userServices.userToDto(session);
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Add Inventory");
@@ -70,8 +67,8 @@ public class InventoryController extends HandlerInterceptorAdapter {
             return "inventory/add";
         }
 
-        item.setUser(userToItemService.getUser(user));
-        userToItemService.addItemToUserInventory(item, user);
+        item.setUser(userServices.getUser(user));
+        userServices.addItemToUserInventory(item, user);
         inventoryRepository.save(item);
 
         return "redirect:";

@@ -2,7 +2,10 @@ package com.jennmichelle.theborrowers1.models;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Borrower extends AbstractEntity{
@@ -23,9 +26,17 @@ public class Borrower extends AbstractEntity{
     @ManyToOne
     private User user;
 
+    @OneToMany(mappedBy = "borrower")
+    public List<Loan> borrowerLoanList = new ArrayList<>();
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
+
+
+    private int points = 50;
+    private String status;
+
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -61,5 +72,21 @@ public class Borrower extends AbstractEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 }

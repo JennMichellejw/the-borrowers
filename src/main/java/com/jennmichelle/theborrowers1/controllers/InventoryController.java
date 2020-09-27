@@ -16,6 +16,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -89,5 +91,23 @@ public class InventoryController extends HandlerInterceptorAdapter {
 
         return "inventory/itemDetail";
     }
+
+
+    @RequestMapping
+    public String searchResults(Model model, @RequestParam String searchTerm, HttpSession session){
+
+        List<InventoryItem> inventoryItems = userServices.userToDto(session).getUserInventoryList();
+        List<InventoryItem> results = new ArrayList<>();
+
+        for(InventoryItem item : inventoryItems){
+            if(item.getName().contains(searchTerm)){
+                results.add(item);
+            }
+        }
+
+        model.addAttribute("inventory", results);
+        return "inventory/index";
+    }
+
 
 }

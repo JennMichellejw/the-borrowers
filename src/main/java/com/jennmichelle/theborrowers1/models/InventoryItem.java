@@ -69,4 +69,9 @@ public class InventoryItem extends AbstractEntity{
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

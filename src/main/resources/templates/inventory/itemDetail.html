@@ -16,7 +16,7 @@
     </tr>
     <tr>
         <th>Description</th>
-        <td th:text="${item.description}"></td>
+        <td th:text="${item.description}" ></td>
     </tr>
     <tr>
         <th>Condition</th>
@@ -24,6 +24,6 @@
     </tr>
     <tr>
         <th>Loan item</th>
-        <td><a class = "nav-link" href="/loan/add">create loan</a></td>
+        <td><a th:href="@{/loan/add(itemId = ${item.id})}">create loan</a></td>
     </tr>
 </table>

@@ -37,6 +37,10 @@ public class Borrower extends AbstractEntity{
     private int points = 50;
     private String status;
 
+    private String fullName(){
+        return firstName + " " + lastName;
+    }
+
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -88,5 +92,10 @@ public class Borrower extends AbstractEntity{
 
     public void setPoints(int points) {
         this.points = points;
+    }
+
+    @Override
+    public String toString() {
+        return  firstName + ' ' + lastName;
     }
 }

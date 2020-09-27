@@ -4,26 +4,55 @@
 
 <header th:replace="fragments :: header"></header>
 <form method="post">
-    <div class="form-group">
-        <label>Which item are you loaning out?
-            <select th:field="${loan.item}">
-                <option th:each="item : ${items}"
-                        th:value="${item.name}"
-                        th:text="${item.name}"
-                ></option>
-            </select>
-        </label>
-    </div>
+<!--    <div class="form-group">-->
+<!--        <label>Which item are you loaning out?-->
+<!--            <select th:field="${loan.item}">-->
+<!--                <option th:each="item : ${items}"-->
+<!--                        th:value="${item.name}"-->
+<!--                        th:text="${item.name}"-->
+<!--                ></option>-->
+<!--            </select>-->
+<!--        </label>-->
+<!--    </div>-->
     <div class="form-group">
         <label>Who is borrowing this item?
-            <select th:field="${loan.borrower}">
-                <option th:each="borrower : ${borrowers}"
-                        th:value="${borrower.firstName} + ' ' + ${borrower.lastName}"
+<!--            <form th:action="@{/confirmBorrower}">-->
+<!--            <input >-->
+            <select name = "borrowerId" >
+                <option
+                        th:each="borrower : ${borrowers}"
+                        th:value = "${borrower.id}"
                         th:text="${borrower.firstName} + ' ' + ${borrower.lastName}"
                 ></option>
             </select>
+<!--            <input type="button" value = "find borrower">-->
+<!--            </form>-->
         </label>
     </div>
+
+<!--        <th:block>-->
+<!--            <div>-->
+<!--            <table class="job-listing">-->
+<!--                <tr th:each="borrower : ${borrowers}">-->
+<!--                    <td>-->
+<!--                        <p>-->
+<!--                            Name:-->
+<!--                        </p>-->
+<!--                        <p th:text="${'Name: ' + borrower.fullName()}"></p>-->
+<!--                        <p>-->
+<!--                            Email:-->
+<!--                        </p>-->
+<!--                        <p th:text="${borrower.email}"></p>-->
+<!--                        <p>-->
+<!--                            Phone number:-->
+<!--                        </p>-->
+<!--                        <p th:text="${borrower.phoneNumber}"></p>-->
+
+<!--                    </td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            </div>-->
+<!--        </th:block>-->
     <div class="form-group">
         <label>Due Date
             <input th:feild = "${loan.dueDate}" type = "date" class = "form-control">

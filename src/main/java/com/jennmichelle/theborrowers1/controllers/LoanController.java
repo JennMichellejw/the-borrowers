@@ -77,13 +77,6 @@ public class LoanController{
                                              Errors errors, Model model, @RequestParam int itemId, @RequestParam int borrowerId) {
 
         UserDTO user = userServices.userToDto(session);
-//        model.getAttribute("borrower");
-//        if(errors.hasErrors()) {
-//            model.addAttribute("title", "Create Loan");
-//            model.addAttribute("items", loanServices.getUser(session).getUserInventoryList());
-//            model.addAttribute("borrowers", loanServices.getUser(session).getUserBorrowerList());
-//            return "loan/add";
-//        }
 
         Optional<InventoryItem> itemResult = inventoryRepository.findById(itemId);
 

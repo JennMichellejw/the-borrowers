@@ -1,9 +1,25 @@
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title></title>
-</head>
-<body>
+<head th:replace="fragments :: head"></head>
+<body class="container">
 
-</body>
-</html>
+<header th:replace="fragments :: header"></header>
+
+<table class="table table-striped">
+    <tr>
+        <th>Item</th>
+        <td th:text="${loan.item}"></td>
+    </tr>
+    <tr>
+        <th>Borrower</th>
+        <td th:text="${loan.borrower}"></td>
+    </tr>
+    <tr>
+        <th>Due date</th>
+        <td th:text="${loan.dueDate}" ></td>
+    </tr>
+    <tr>
+        <th>Terms of loan</th>
+        <td th:text="${loan.costForUnreturnedItem}"></td>
+    </tr>
+</table>

@@ -21,6 +21,8 @@ public class InventoryItem extends AbstractEntity{
 
     private String type;
 
+    private Boolean onLoan = false;
+
     @ManyToOne
     private User user;
 
@@ -32,7 +34,6 @@ public class InventoryItem extends AbstractEntity{
     public int getUser() {
         return user.getId();
     }
-
 
     public String getType() {
         return type;
@@ -68,6 +69,22 @@ public class InventoryItem extends AbstractEntity{
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Boolean getOnLoan() {
+        return onLoan;
+    }
+
+    public void setOnLoan(Boolean onLoan) {
+        this.onLoan = onLoan;
+    }
+
+    public List<Loan> getItemLoanList() {
+        return itemLoanList;
+    }
+
+    public void setItemLoanList(List<Loan> itemLoanList) {
+        this.itemLoanList = itemLoanList;
     }
 
     @Override

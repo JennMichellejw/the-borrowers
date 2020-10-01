@@ -1,11 +1,15 @@
 package com.jennmichelle.theborrowers1.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Pattern;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 public class Loan extends AbstractEntity{
@@ -19,7 +23,8 @@ public class Loan extends AbstractEntity{
     @ManyToOne
     private User user;
 
-    private int dueDate;
+//    @Pattern(regexp = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$" , message = "Enter valid date")
+    private String dueDate;
     private int returnDate;
     private String costForUnreturnedItem;
     private String returnCondition;
@@ -61,11 +66,11 @@ public class Loan extends AbstractEntity{
         this.returnDate = returnDate;
     }
 
-    public int getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(int dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 

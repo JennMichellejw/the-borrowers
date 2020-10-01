@@ -23,7 +23,17 @@
         <td th:text="${item.itemCondition}"></td>
     </tr>
     <tr>
-        <th>Loan item</th>
-        <td><a th:href="@{/loan/add(itemId = ${item.id})}">create loan</a></td>
+        <th>on Loan</th>
+        <td th:text = "${item.onLoan}">create loan</td>
+    </tr>
+    <tr>
+        <th:block th:if="${item.onLoan}">
+            <th>Item is on loan</th>
+            <td> <a th:href="@{/loan/return(itemId = ${item.id})}">return loan</a></td>
+        </th:block>
+        <th:block th:unless = "${item.onLoan}">
+            <th>Loan item?</th>
+            <td><a th:href="@{/loan/add(itemId = ${item.id})}">create loan</a></td>
+        </th:block>
     </tr>
 </table>

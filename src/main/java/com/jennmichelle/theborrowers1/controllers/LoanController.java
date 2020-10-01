@@ -149,7 +149,7 @@ public class LoanController{
     }
 
     @GetMapping("return")
-    public String returnLoanForm(Model model, @RequestParam(required = false) int itemId) {
+    public String returnLoanForm(Model model, @RequestParam int itemId) {
 
         Optional<InventoryItem> result = inventoryRepository.findById(itemId);
 
@@ -168,20 +168,25 @@ public class LoanController{
     }
 
     @PostMapping("return")
-    public String processLoanReturn(Model model, @RequestParam int itemId){
+    public String processLoanReturn(Model model, @RequestParam int itemId, @RequestParam String returnDate, @RequestParam String loanReturnCondition){
+
+        Loan loan = null;
+        InventoryItem item = null;
 
         Optional<InventoryItem> result = inventoryRepository.findById(itemId);
 
         if (result.isEmpty()) {
             model.addAttribute("title", "Invalid Item ID: " + itemId);
         } else {
-            InventoryItem item = result.get();
-            Loan loan = loanServices.getLoanFromItem(item);
+            item = result.get();
+            loan = loanServices.getLoanFromItem(item);
+            loan.setReturnDate(returnDate);
+            loan.setReturnCondition(loanReturnCondition);
             loan.setActive(false);
             loan.getItem().setOnLoan(false);
-            if(!loan.getReturnCondition().equals(loan.getItem().getItemCondition())){
-                loan.getItem().setItemCondition(loan.getReturnCondition());
-            }
+//            if(!loan.getReturnCondition().equals(loan.getItem().getItemCondition())){
+//                loan.getItem().setItemCondition(loan.getReturnCondition());
+//            }
             return "index";
         }
 

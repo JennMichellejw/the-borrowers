@@ -25,7 +25,7 @@ public class Loan extends AbstractEntity{
 
 //    @Pattern(regexp = "^((19|20)\\d\\d)-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])$" , message = "Enter valid date")
     private String dueDate;
-    private int returnDate;
+    private String returnDate;
     private String costForUnreturnedItem;
     private String returnCondition;
     private Boolean isActive = true;
@@ -58,11 +58,11 @@ public class Loan extends AbstractEntity{
         this.costForUnreturnedItem = costForUnreturnedItem;
     }
 
-    public int getReturnDate() {
+    public String getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(int returnDate) {
+    public void setReturnDate(String returnDate) {
         this.returnDate = returnDate;
     }
 

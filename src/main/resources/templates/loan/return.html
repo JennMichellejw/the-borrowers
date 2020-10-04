@@ -5,14 +5,14 @@
 <header th:replace="fragments :: header"></header>
 <form method="post">
     <div class="form-group">
-        <label>Date item was returned
-            <span th:text = "'Due date of loan is ' + ${loan.dueDate}"></span>
+        <label>Date of returned:
+            <span th:text = "'Due date :' + ${loan.dueDate}"></span>
             </br>
             <input th:name = "returnDate" type = "date" class = "form-control">
         </label>
     </div>
     <div class="form-group">
-        <br>What condition was the item returned in
+        <label>What condition was the item returned in:
             <span th:text = "'Item was in ' + ${item.itemCondition} + ' at the time of loan'"></span>
             </br>
             <select th:name ="loanReturnCondition">
@@ -23,8 +23,13 @@
             </select>
         </label>
     </div>
+    <div>
+        <label>Additional details:
+        <input name = "additionalDetails" type="text" class = "form-control">
+        </label>
+    </div>
 
-    <input type="submit" value="Create" class="btn btn-primary">
+    <input type="submit" value="Return" class="btn btn-primary">
 </form>
 
 </body>

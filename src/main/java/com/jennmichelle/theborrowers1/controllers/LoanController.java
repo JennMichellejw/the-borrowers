@@ -148,6 +148,8 @@ public class LoanController{
         return "loan/loanDetail";
     }
 
+
+
     @GetMapping("return")
     public String returnLoanForm(Model model, @RequestParam int itemId) {
 
@@ -184,10 +186,14 @@ public class LoanController{
             loan.setReturnCondition(loanReturnCondition);
             loan.setActive(false);
             loan.getItem().setOnLoan(false);
-//            if(!loan.getReturnCondition().equals(loan.getItem().getItemCondition())){
-//                loan.getItem().setItemCondition(loan.getReturnCondition());
-//            }
-            return "index";
+            if(!loan.getReturnCondition().equals(loan.getItem().getItemCondition())){
+                loan.getItem().setItemCondition(loan.getReturnCondition());
+            }
+            loanRepository.save(loan);
+            model.addAttribute("loan", loan);
+            model.addAttribute("item", item);
+
+            return "loan/loanDetail";
         }
 
         return "redirect:";

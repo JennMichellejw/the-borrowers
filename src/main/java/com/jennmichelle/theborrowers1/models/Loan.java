@@ -28,6 +28,7 @@ public class Loan extends AbstractEntity{
     private String returnDate;
     private String costForUnreturnedItem;
     private String returnCondition;
+    private String returnDetails;
     private Boolean isActive = true;
 
     public Loan() {
@@ -96,5 +97,13 @@ public class Loan extends AbstractEntity{
 
     public void setBorrower(Borrower borrower) {
         this.borrower = borrower;
+    }
+
+    public String getReturnDetails() {
+        return returnDetails;
+    }
+
+    public void setReturnDetails(String returnDetails) {
+        this.returnDetails = returnDetails;
     }
 }

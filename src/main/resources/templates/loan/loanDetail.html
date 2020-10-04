@@ -22,4 +22,14 @@
         <th>Terms of loan</th>
         <td th:text="${loan.costForUnreturnedItem}"></td>
     </tr>
+    <tr>
+        <th:block th:if="${loan.getActive}">
+            <th>This loan is active</th>
+            <td> <a th:href="@{/loan/return(itemId = ${item.id})}">return loan</a></td>
+        </th:block>
+        <th:block th:unless = "${item.onLoan}">
+            <th>Loan item?</th>
+            <td><a th:href="@{/loan/add(itemId = ${item.id})}">create loan</a></td>
+        </th:block>
+    </tr>
 </table>

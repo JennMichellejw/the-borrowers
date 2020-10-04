@@ -43,5 +43,17 @@ public class LoanServices {
         return result;
     }
 
+    public int getLoanFromItemId(int itemId){
+
+        int result = 0;
+        for(Loan loan : loanRepository.findAll()) {
+            if (loan.getItem().equals(inventoryRepository.findById(itemId)) && loan.getItem().getOnLoan()) {
+                result = loan.getId();
+            }
+
+        }
+        return result;
+    }
+
 }
 
